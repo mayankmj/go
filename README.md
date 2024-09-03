@@ -1,7 +1,7 @@
 # Blog API
 
 ## Setup the go application
-### git clone https://github.com/your-username/blog-api.git
+### git clone
 ### cd blog-api
 ### go mod tidy
 ### go run main.go
