@@ -21,7 +21,7 @@ func main() {
     rdsPort := os.Getenv("RDS_PORT")
     dbUser := os.Getenv("DB_USER")
     dbPassword := os.Getenv("DB_PASSWORD")
-    dbName := os.Getenv("DB_NAME")
+    dbName := "blog_api_go"
     
     dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
         dbUser,
@@ -87,8 +87,13 @@ if err != nil {
     log.Fatal(err)
 }
 
+port := os.Getenv("PORT")
+if port == "" {
+    port = "8080"
+}
+
 fmt.Println("Table 'blogs' created successfully.")
     router := routers.InitRouter(db)
-    fmt.Println("Server started at http://localhost:8080")
-    log.Fatal(http.ListenAndServe(":8080", router))
+    fmt.Printf("Server started at http://localhost:%s\n", port)
+    log.Fatal(http.ListenAndServe(":"+port, router))
 }
