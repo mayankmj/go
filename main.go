@@ -7,19 +7,22 @@ import (
     "net/http"
     "blog-app/routers"
     _ "github.com/go-sql-driver/mysql"
+    "os"
+    "github.com/joho/godotenv"
 )
 
 var db *sql.DB
 
 func main() {
-    var err error
     
-    rdsEndpoint := "golang-blog-api-db.cfkc8g4mm95o.us-east-1.rds.amazonaws.com"
-    rdsPort := "3306"
-    dbUser := "admin"
-    dbPassword := "Mayank1234"
-    dbName := "" 
+    err := godotenv.Load()
 
+    rdsEndpoint := os.Getenv("RDS_ENDPOINT")
+    rdsPort := os.Getenv("RDS_PORT")
+    dbUser := os.Getenv("DB_USER")
+    dbPassword := os.Getenv("DB_PASSWORD")
+    dbName := os.Getenv("DB_NAME")
+    
     dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
         dbUser,
         dbPassword,
