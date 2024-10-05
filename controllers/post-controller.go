@@ -10,6 +10,7 @@ import (
     "time"
     "github.com/gorilla/mux"
 )
+
 func ProfileHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         switch r.Method {

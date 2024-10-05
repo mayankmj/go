@@ -7,13 +7,8 @@ import (
     "blog-app/models"
     "golang.org/x/crypto/bcrypt"
     "fmt"
-    "regexp"
     "blog-app/utils"
 )
-func validatePassword (pass string) bool {
-    var password = regexp.MustCompile(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$`)
-    return password.MatchString(pass)
-}
 func Register(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         var user models.User
@@ -31,12 +26,6 @@ func Register(db *sql.DB) http.HandlerFunc {
             http.Error(w, "Password must be at least 6 characters long", http.StatusBadRequest)
             return
         }
-
-        if !validatePassword(user.Password) {
-            fmt.Println("Password should match the minimum requirements")
-            http.Error(w,"Recheck the passwrod",http.StatusBadRequest)
-            return
-        } 
 
         // Hash the password
         hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
@@ -72,8 +61,6 @@ func Login(db *sql.DB) http.HandlerFunc {
             return
         }
 
-        fmt.Println("User login data:", loginRequest)
-
         // Fetch user by email
         storedUser, err := models.GetUserByEmail(db, loginRequest.Email)
         if err != nil {
@@ -81,8 +68,6 @@ func Login(db *sql.DB) http.HandlerFunc {
             http.Error(w, "Invalid email or password", http.StatusUnauthorized)
             return
         }
-
-        fmt.Println("Stored user data:", storedUser)
 
         // Compare the hashed password
         err = bcrypt.CompareHashAndPassword([]byte(storedUser.Password), []byte(loginRequest.Password))
@@ -99,8 +84,6 @@ func Login(db *sql.DB) http.HandlerFunc {
             http.Error(w, "Error generating token", http.StatusInternalServerError)
             return
         }
-
-        fmt.Println("Login successful, token generated:", token)
 
         // Send the token in the response
         w.WriteHeader(http.StatusOK)

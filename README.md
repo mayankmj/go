@@ -67,8 +67,8 @@
 - **Response:**
     ```json
     {
-      "username": "johndoe",
-      "name": "John Doe"
+      "email": "john@example.com",
+      "password": "password123"
     }
     ```
 - **cURL Example:**
