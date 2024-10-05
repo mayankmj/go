@@ -14,14 +14,12 @@ var db *sql.DB
 func main() {
     var err error
     
-    // Replace these placeholders with your RDS MySQL credentials
-    rdsEndpoint := "database-2.c5qcmqo02oo1.us-east-2.rds.amazonaws.com"
+    rdsEndpoint := "golang-blog-api-db.cfkc8g4mm95o.us-east-1.rds.amazonaws.com"
     rdsPort := "3306"
     dbUser := "admin"
     dbPassword := "Mayank1234"
-    dbName := "blog_api_go" 
+    dbName := "" 
 
-    // Construct the connection string without specifying a database name
     dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
         dbUser,
         dbPassword,
@@ -87,9 +85,7 @@ if err != nil {
 }
 
 fmt.Println("Table 'blogs' created successfully.")
-
     router := routers.InitRouter(db)
     fmt.Println("Server started at http://localhost:8080")
     log.Fatal(http.ListenAndServe(":8080", router))
-
 }

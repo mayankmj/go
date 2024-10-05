@@ -86,7 +86,6 @@ func GetUserByID(db *sql.DB, userID int) (*User, error) {
     return &user, nil
 }
 
-
 func (user *User) UpdateProfile(db *sql.DB) error {
     query := `UPDATE users SET name = ?, username = ?, email = ? WHERE id = ?`
     _, err := db.Exec(query, user.Name, user.Username, user.Email, user.ID)
