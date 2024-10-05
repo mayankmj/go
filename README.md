@@ -1,12 +1,15 @@
 # Blog API
 
+## Note: here , I am using aws-rds (mysql) for database
+
+# Deploy link: https://golang-blog-api-endpoint.onrender.com/
+You can use this deploy link in place of http://localhost:8080
+
 ## Setup the go application
 ### git clone
 ### cd blog-api
 ### go mod tidy
 ### go run main.go
-
-## Note: here , I am using aws-rds (mysql) for database
 
 ## User Endpoints
 ### Register User
